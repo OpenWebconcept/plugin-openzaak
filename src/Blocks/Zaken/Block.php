@@ -9,10 +9,11 @@ use OWC\Zaaksysteem\Contracts\Client;
 use OWC\Zaaksysteem\Endpoints\Filter\ResultaattypenFilter;
 use OWC\Zaaksysteem\Endpoints\Filter\ZakenFilter;
 use OWC\Zaaksysteem\Entities\Zaaktype;
-use function OWC\Zaaksysteem\Foundation\Helpers\resolve;
-use function OWC\Zaaksysteem\Foundation\Helpers\view;
 use OWC\Zaaksysteem\Resolvers\ContainerResolver;
 use OWC\Zaaksysteem\Support\Collection;
+
+use function OWC\Zaaksysteem\Foundation\Helpers\resolve;
+use function OWC\Zaaksysteem\Foundation\Helpers\view;
 
 class Block
 {
@@ -58,7 +59,23 @@ class Block
 
     protected function getCurrentUserBsn(): string
     {
-        return resolve('digid.current_user_bsn');
+        $bsn = resolve('digid.current_user_bsn');
+
+        /**
+         * TEMP: signicat plugin has some changes pending which requires another implementation.
+         */
+        if (empty($bsn)) {
+            $isLoggedIn = apply_filters('owc_siginicat_openid_is_user_logged_in', false, 'digid');
+
+            if ($isLoggedIn) {
+                $userInfo = apply_filters('owc_signicat_openid_user_info', [], 'digid');
+                $bsn = $userInfo['sub'] ?? '';
+            }
+
+            return ! empty($bsn) && is_string($bsn) ? $bsn : '';
+        }
+
+        return $bsn;
     }
 
     protected function handleZaken(array $attributes): Collection
@@ -105,7 +122,7 @@ class Block
 
             try {
                 $zaken[] = $client->zaken()->filter($filter)->all();
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 continue;
             }
         }
