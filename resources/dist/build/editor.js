@@ -1,392 +1,52 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 682:
-/***/ (function() {
+/***/ "./resources/js/editor/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/editor/index.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-var _this = this;
-var registerBlockType = wp.blocks.registerBlockType;
-var _wp = wp,
-  ServerSideRender = _wp.serverSideRender;
-var _wp$blockEditor = wp.blockEditor,
-  useBlockProps = _wp$blockEditor.useBlockProps,
-  RichText = _wp$blockEditor.RichText,
-  InspectorControls = _wp$blockEditor.InspectorControls,
-  BlockControls = _wp$blockEditor.BlockControls,
-  AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,
-  ColorPalette = _wp$blockEditor.ColorPalette,
-  MediaUploadCheck = _wp$blockEditor.MediaUploadCheck,
-  MediaUpload = _wp$blockEditor.MediaUpload;
-var _wp$components = wp.components,
-  Panel = _wp$components.Panel,
-  PanelBody = _wp$components.PanelBody,
-  PanelRow = _wp$components.PanelRow,
-  Button = _wp$components.Button,
-  TextControl = _wp$components.TextControl,
-  IconButton = _wp$components.IconButton,
-  SelectControl = _wp$components.SelectControl,
-  CheckboxControl = _wp$components.CheckboxControl,
-  RangeControl = _wp$components.RangeControl;
-var Fragment = wp.element.Fragment;
-registerBlockType('owc/mijn-zaken', {
-  apiVersion: 2,
-  title: 'Mijn Zaken',
-  category: 'common',
-  attributes: {
-    zaakClient: {
-      type: 'string',
-      "default": 'openzaak'
-    },
-    zaaktypeFilter: {
-      type: 'string',
-      "default": '[]'
-    },
-    updateMePlease: {
-      type: 'boolean',
-      "default": true
-    },
-    combinedClients: {
-      type: 'boolean',
-      "default": false
-    },
-    byBSN: {
-      type: 'boolean',
-      "default": true
-    },
-    view: {
-      type: 'string',
-      "default": 'default'
-    },
-    numberOfItems: {
-      type: 'number',
-      "default": 2
-    },
-    orderBy: {
-      type: 'string',
-      "default": 'startdatum'
-    }
-  },
-  edit: function edit(_ref) {
-    var attributes = _ref.attributes,
-      setAttributes = _ref.setAttributes;
-    var blockProps = useBlockProps();
-    var zaakClient = attributes.zaakClient,
-      zaaktypeFilter = attributes.zaaktypeFilter,
-      updateMePlease = attributes.updateMePlease,
-      combinedClients = attributes.combinedClients,
-      byBSN = attributes.byBSN,
-      orderBy = attributes.orderBy;
-    var zaaktypeFilterArr = JSON.parse(zaaktypeFilter);
-    var addZTFilter = function addZTFilter() {
-      zaaktypeFilterArr.push('');
-      setAttributes({
-        zaaktypeFilter: JSON.stringify(zaaktypeFilterArr),
-        updateMePlease: !updateMePlease
-      });
-    };
-    var changeZTFilter = function changeZTFilter(ztUri, index) {
-      zaaktypeFilterArr[index] = ztUri;
-      setAttributes({
-        zaaktypeFilter: JSON.stringify(zaaktypeFilterArr),
-        updateMePlease: !updateMePlease
-      });
-    };
-    var removeZTFilter = function removeZTFilter(index) {
-      zaaktypeFilterArr.splice(index, 1);
-      setAttributes({
-        zaaktypeFilter: JSON.stringify(zaaktypeFilterArr),
-        updateMePlease: !updateMePlease
-      });
-    };
-    var zaaktypeFields = zaaktypeFilterArr.map(function (location, index) {
-      return /*#__PURE__*/React.createElement(Fragment, {
-        key: index
-      }, /*#__PURE__*/React.createElement(TextControl, {
-        className: "ogz-ztfilter_add",
-        placeholder: "B1026",
-        value: zaaktypeFilterArr[index],
-        onChange: function onChange(ztUri) {
-          return changeZTFilter(ztUri, index);
-        }
-      }), /*#__PURE__*/React.createElement(IconButton, {
-        className: "ogz-ztfilter_remove",
-        icon: "no-alt",
-        label: "Verwijder Zaaktype filter",
-        onClick: function onClick() {
-          return removeZTFilter(index);
-        }
-      }));
-    });
-    return /*#__PURE__*/React.createElement("div", blockProps, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelBody, {
-      title: "Zaaksysteem",
-      initialOpen: false
-    }, /*#__PURE__*/React.createElement("p", null, "Selecteer het zaaksysteem waaruit de zaken opgehaald moeten worden."), /*#__PURE__*/React.createElement(SelectControl, {
-      label: "Zaaksysteem",
-      value: zaakClient,
-      options: [{
-        label: 'OpenZaak',
-        value: 'openzaak'
-      }, {
-        label: 'Decos JOIN',
-        value: 'decos-join'
-      }, {
-        label: 'Rx.Mission',
-        value: 'rx-mission'
-      }, {
-        label: 'xxllnc',
-        value: 'xxllnc'
-      }, {
-        label: 'Procura',
-        value: 'procura'
-      }],
-      onChange: function onChange(newzaakClient) {
-        return setAttributes({
-          zaakClient: newzaakClient
-        });
-      }
-    }), /*#__PURE__*/React.createElement(CheckboxControl, {
-      label: "Gecombineerde zaaksystemen",
-      help: "Toon zaken uit gecombineerde zaaksystemen.",
-      checked: combinedClients,
-      onChange: function onChange(combinedClients) {
-        return setAttributes({
-          combinedClients: combinedClients
-        });
-      }
-    }), /*#__PURE__*/React.createElement(CheckboxControl, {
-      label: "Filter op BSN",
-      help: "Filter zaken die aangemaakt zijn door de ingelogde gebruiker op basis van het BSN nummer.",
-      checked: byBSN,
-      onChange: function onChange(byBSN) {
-        return setAttributes({
-          byBSN: byBSN
-        });
-      }
-    }), /*#__PURE__*/React.createElement(SelectControl, {
-      label: "Sorteer op",
-      value: orderBy,
-      options: [{
-        label: 'Startdatum',
-        value: 'startdatum'
-      }, {
-        label: 'Einddatum',
-        value: 'einddatum'
-      }, {
-        label: 'Publicatiedatum',
-        value: 'publicatiedatum'
-      }, {
-        label: 'Archiefactiedatum',
-        value: 'archiefactiedatum'
-      }, {
-        label: 'Registratiedatum',
-        value: 'registratiedatum'
-      }, {
-        label: 'Identificatie',
-        value: 'identificatie'
-      }],
-      onChange: function onChange(neworderBy) {
-        return setAttributes({
-          orderBy: neworderBy
-        });
-      }
-    })), /*#__PURE__*/React.createElement(PanelBody, {
-      title: "Zaaktype configuratie",
-      initialOpen: false
-    }, /*#__PURE__*/React.createElement(PanelRow, null, "Zaaktypes"), zaaktypeFields, /*#__PURE__*/React.createElement(Button, {
-      isDefault: true,
-      icon: "plus",
-      onClick: addZTFilter.bind(_this)
-    }, "Voeg een Zaaktype identificatie toe")), attributes.view === 'current' && /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(RangeControl, {
-      min: 1,
-      max: 20,
-      label: "Aantal",
-      help: "Het aantal zaken dat getoond moeten worden.",
-      value: attributes.numberOfItems,
-      onChange: function onChange(value) {
-        return setAttributes({
-          numberOfItems: value
-        });
-      }
-    })), /*#__PURE__*/React.createElement(PanelBody, {
-      title: "Weergave",
-      initialOpen: false
-    }, /*#__PURE__*/React.createElement(SelectControl, {
-      label: "Selecteer de weergave van de zaken",
-      value: attributes.view,
-      options: [{
-        label: 'Standaard',
-        value: 'default'
-      }, {
-        label: 'Tabbladen',
-        value: 'tabs'
-      }, {
-        label: 'Lopende Zaken',
-        value: 'current'
-      }],
-      onChange: function onChange(newView) {
-        return setAttributes({
-          view: newView
-        });
-      }
-    })))), attributes.view === 'default' ? /*#__PURE__*/React.createElement("p", null, "Standaardweergave") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("ul", {
-      className: "zaak-tabs | nav nav-tabs",
-      id: "zaak-tabs",
-      role: "tablist"
-    }, /*#__PURE__*/React.createElement("li", {
-      className: "nav-item",
-      role: "presentation"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "zaak-tabs-link | nav-link active"
-    }, "Lopende zaken")), /*#__PURE__*/React.createElement("li", {
-      className: "nav-item",
-      role: "presentation"
-    }, /*#__PURE__*/React.createElement("button", {
-      className: "zaak-tabs-link | nav-link"
-    }, "Afgeronde zaken"))), /*#__PURE__*/React.createElement("div", {
-      className: "tab-content",
-      id: "myTabContent"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "tab-pane fade show active"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-wrapper"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card"
-    }, /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-svg",
-      width: "385",
-      height: "200",
-      viewBox: "0 0 385 200",
-      fill: "#F1F1F1",
-      xmlns: "http://www.w3.org/2000/svg",
-      preserveAspectRatio: "none"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z"
-    })), /*#__PURE__*/React.createElement("h2", {
-      className: "zaak-card-title"
-    }, "Aanvragen uittreksel BRP"), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-footer"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-date"
-    }, "12 december 2023"), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-tag"
-    }, "Dummy content"), /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-arrow",
-      width: "24",
-      height: "24",
-      viewBox: "0 0 24 24",
-      xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z"
-    })))), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card"
-    }, /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-svg",
-      width: "385",
-      height: "200",
-      viewBox: "0 0 385 200",
-      fill: "#F1F1F1",
-      xmlns: "http://www.w3.org/2000/svg",
-      preserveAspectRatio: "none"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z"
-    })), /*#__PURE__*/React.createElement("h2", {
-      className: "zaak-card-title"
-    }, "Aanmelden straatfeest"), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-footer"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-date"
-    }, "15 oktober 2023"), /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-arrow",
-      width: "24",
-      height: "24",
-      viewBox: "0 0 24 24",
-      xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z"
-    })))), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card"
-    }, /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-svg",
-      width: "385",
-      height: "200",
-      viewBox: "0 0 385 200",
-      fill: "#F1F1F1",
-      xmlns: "http://www.w3.org/2000/svg",
-      preserveAspectRatio: "none"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z"
-    })), /*#__PURE__*/React.createElement("h2", {
-      className: "zaak-card-title"
-    }, "Aanvraag rijbewijs"), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-footer"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-date"
-    }, "20 januari 2023"), /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-arrow",
-      width: "24",
-      height: "24",
-      viewBox: "0 0 24 24",
-      xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z"
-    })))), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card"
-    }, /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-svg",
-      width: "385",
-      height: "200",
-      viewBox: "0 0 385 200",
-      fill: "#F1F1F1",
-      xmlns: "http://www.w3.org/2000/svg",
-      preserveAspectRatio: "none"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z"
-    })), /*#__PURE__*/React.createElement("h2", {
-      className: "zaak-card-title"
-    }, "Aanvragen leefbaarheidsbudget"), /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-footer"
-    }, /*#__PURE__*/React.createElement("div", {
-      className: "zaak-card-date"
-    }, "11 januari 2023"), /*#__PURE__*/React.createElement("svg", {
-      className: "zaak-card-arrow",
-      width: "24",
-      height: "24",
-      viewBox: "0 0 24 24",
-      xmlns: "http://www.w3.org/2000/svg"
-    }, /*#__PURE__*/React.createElement("path", {
-      d: "M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z"
-    })))))))));
-  },
-  save: function save(_ref2) {
-    var className = _ref2.className;
-    return /*#__PURE__*/React.createElement("section", {
-      className: className
-    });
-  }
-});
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _register_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./register-blocks */ \"./resources/js/editor/register-blocks.js\");\n/* harmony import */ var _register_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_register_blocks__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _mijn_zaken__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mijn-zaken */ \"./resources/js/editor/mijn-zaken.js\");\n/* harmony import */ var _mijn_zaken__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mijn_zaken__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _mijn_taken__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mijn-taken */ \"./resources/js/editor/mijn-taken.js\");\n/* harmony import */ var _mijn_taken__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_mijn_taken__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\n\n//# sourceURL=webpack://owc-gravityforms-zaaksysteem/./resources/js/editor/index.js?");
 
 /***/ }),
 
-/***/ 788:
+/***/ "./resources/js/editor/mijn-taken.js":
+/*!*******************************************!*\
+  !*** ./resources/js/editor/mijn-taken.js ***!
+  \*******************************************/
 /***/ (() => {
 
-var registerBlockType = wp.blocks.registerBlockType;
-var _wp = wp,
-  ServerSideRender = _wp.serverSideRender;
-registerBlockType("owc/gravityforms-zaaksysteem", {
-  title: "Zaken",
-  category: "theme",
-  edit: function edit() {
-    return /*#__PURE__*/React.createElement(ServerSideRender, {
-      block: "owc/gravityforms-zaaksysteem"
-    });
-  },
-  save: function save() {
-    return function () {
-      return null;
-    };
-  }
-});
+eval("var registerBlockType = wp.blocks.registerBlockType;\nvar _wp = wp,\n  ServerSideRender = _wp.serverSideRender;\nvar _wp$blockEditor = wp.blockEditor,\n  useBlockProps = _wp$blockEditor.useBlockProps,\n  InspectorControls = _wp$blockEditor.InspectorControls;\nvar _wp$components = wp.components,\n  Panel = _wp$components.Panel,\n  PanelBody = _wp$components.PanelBody,\n  SelectControl = _wp$components.SelectControl,\n  RangeControl = _wp$components.RangeControl;\nvar Fragment = wp.element.Fragment;\nregisterBlockType('owc/mijn-taken', {\n  apiVersion: 2,\n  title: 'Mijn Taken',\n  category: 'common',\n  attributes: {\n    zaakClient: {\n      type: 'string',\n      \"default\": 'openzaak'\n    },\n    view: {\n      type: 'string',\n      \"default\": 'default'\n    },\n    numberOfItems: {\n      type: 'number',\n      \"default\": 2\n    }\n  },\n  edit: function edit(_ref) {\n    var attributes = _ref.attributes,\n      setAttributes = _ref.setAttributes;\n    var blockProps = useBlockProps();\n    var zaakClient = attributes.zaakClient;\n    return /*#__PURE__*/React.createElement(\"div\", blockProps, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelBody, {\n      title: \"Zaaksysteem\",\n      initialOpen: false\n    }, /*#__PURE__*/React.createElement(\"p\", null, \"Selecteer het zaaksysteem waaruit de taken opgehaald moeten worden.\"), /*#__PURE__*/React.createElement(SelectControl, {\n      label: \"Zaaksysteem\",\n      value: zaakClient,\n      options: [{\n        label: 'OpenZaak',\n        value: 'openzaak'\n      }, {\n        label: 'Decos JOIN',\n        value: 'decos-join'\n      }, {\n        label: 'Rx.Mission',\n        value: 'rx-mission'\n      }, {\n        label: 'xxllnc',\n        value: 'xxllnc'\n      }, {\n        label: 'Procura',\n        value: 'procura'\n      }],\n      onChange: function onChange(newzaakClient) {\n        return setAttributes({\n          zaakClient: newzaakClient\n        });\n      }\n    })), attributes.view === 'current' && /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(RangeControl, {\n      min: 1,\n      max: 20,\n      label: \"Aantal\",\n      help: \"Het aantal taken dat getoond moeten worden.\",\n      value: attributes.numberOfItems,\n      onChange: function onChange(value) {\n        return setAttributes({\n          numberOfItems: value\n        });\n      }\n    })), /*#__PURE__*/React.createElement(PanelBody, {\n      title: \"Weergave\",\n      initialOpen: false\n    }, /*#__PURE__*/React.createElement(SelectControl, {\n      label: \"Selecteer de weergave van de taken\",\n      value: attributes.view,\n      options: [{\n        label: 'Standaard',\n        value: 'default'\n      }, {\n        label: 'Lopende Zaken',\n        value: 'current'\n      }],\n      onChange: function onChange(newView) {\n        return setAttributes({\n          view: newView\n        });\n      }\n    })))), attributes.view === 'default' ? /*#__PURE__*/React.createElement(\"p\", null, \"Standaardweergave\") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\"ul\", {\n      className: \"zaak-tabs | nav nav-tabs\",\n      id: \"zaak-tabs\",\n      role: \"tablist\"\n    }, /*#__PURE__*/React.createElement(\"li\", {\n      className: \"nav-item\",\n      role: \"presentation\"\n    }, /*#__PURE__*/React.createElement(\"button\", {\n      className: \"zaak-tabs-link | nav-link active\"\n    }, \"Lopende taken\")), /*#__PURE__*/React.createElement(\"li\", {\n      className: \"nav-item\",\n      role: \"presentation\"\n    }, /*#__PURE__*/React.createElement(\"button\", {\n      className: \"zaak-tabs-link | nav-link\"\n    }, \"Afgeronde taken\"))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"tab-content\",\n      id: \"myTabContent\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"tab-pane fade show active\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-wrapper\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanvragen uittreksel BRP\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"12 december 2023\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-tag\"\n    }, \"Dummy content\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanmelden straatfeest\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"15 oktober 2023\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanvraag rijbewijs\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"20 januari 2023\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanvragen leefbaarheidsbudget\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"11 januari 2023\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))))))));\n  },\n  save: function save(_ref2) {\n    var className = _ref2.className;\n    return /*#__PURE__*/React.createElement(\"section\", {\n      className: className\n    });\n  }\n});\n\n//# sourceURL=webpack://owc-gravityforms-zaaksysteem/./resources/js/editor/mijn-taken.js?");
+
+/***/ }),
+
+/***/ "./resources/js/editor/mijn-zaken.js":
+/*!*******************************************!*\
+  !*** ./resources/js/editor/mijn-zaken.js ***!
+  \*******************************************/
+/***/ (function() {
+
+eval("var _this = this;\nvar registerBlockType = wp.blocks.registerBlockType;\nvar _wp = wp,\n  ServerSideRender = _wp.serverSideRender;\nvar _wp$blockEditor = wp.blockEditor,\n  useBlockProps = _wp$blockEditor.useBlockProps,\n  RichText = _wp$blockEditor.RichText,\n  InspectorControls = _wp$blockEditor.InspectorControls,\n  BlockControls = _wp$blockEditor.BlockControls,\n  AlignmentToolbar = _wp$blockEditor.AlignmentToolbar,\n  ColorPalette = _wp$blockEditor.ColorPalette,\n  MediaUploadCheck = _wp$blockEditor.MediaUploadCheck,\n  MediaUpload = _wp$blockEditor.MediaUpload;\nvar _wp$components = wp.components,\n  Panel = _wp$components.Panel,\n  PanelBody = _wp$components.PanelBody,\n  PanelRow = _wp$components.PanelRow,\n  Button = _wp$components.Button,\n  TextControl = _wp$components.TextControl,\n  IconButton = _wp$components.IconButton,\n  SelectControl = _wp$components.SelectControl,\n  CheckboxControl = _wp$components.CheckboxControl,\n  RangeControl = _wp$components.RangeControl;\nvar Fragment = wp.element.Fragment;\nregisterBlockType('owc/mijn-zaken', {\n  apiVersion: 2,\n  title: 'Mijn Zaken',\n  category: 'common',\n  attributes: {\n    zaakClient: {\n      type: 'string',\n      \"default\": 'openzaak'\n    },\n    zaaktypeFilter: {\n      type: 'string',\n      \"default\": '[]'\n    },\n    updateMePlease: {\n      type: 'boolean',\n      \"default\": true\n    },\n    combinedClients: {\n      type: 'boolean',\n      \"default\": false\n    },\n    byBSN: {\n      type: 'boolean',\n      \"default\": true\n    },\n    view: {\n      type: 'string',\n      \"default\": 'default'\n    },\n    numberOfItems: {\n      type: 'number',\n      \"default\": 2\n    },\n    orderBy: {\n      type: 'string',\n      \"default\": 'startdatum'\n    }\n  },\n  edit: function edit(_ref) {\n    var attributes = _ref.attributes,\n      setAttributes = _ref.setAttributes;\n    var blockProps = useBlockProps();\n    var zaakClient = attributes.zaakClient,\n      zaaktypeFilter = attributes.zaaktypeFilter,\n      updateMePlease = attributes.updateMePlease,\n      combinedClients = attributes.combinedClients,\n      byBSN = attributes.byBSN,\n      orderBy = attributes.orderBy;\n    var zaaktypeFilterArr = JSON.parse(zaaktypeFilter);\n    var addZTFilter = function addZTFilter() {\n      zaaktypeFilterArr.push('');\n      setAttributes({\n        zaaktypeFilter: JSON.stringify(zaaktypeFilterArr),\n        updateMePlease: !updateMePlease\n      });\n    };\n    var changeZTFilter = function changeZTFilter(ztUri, index) {\n      zaaktypeFilterArr[index] = ztUri;\n      setAttributes({\n        zaaktypeFilter: JSON.stringify(zaaktypeFilterArr),\n        updateMePlease: !updateMePlease\n      });\n    };\n    var removeZTFilter = function removeZTFilter(index) {\n      zaaktypeFilterArr.splice(index, 1);\n      setAttributes({\n        zaaktypeFilter: JSON.stringify(zaaktypeFilterArr),\n        updateMePlease: !updateMePlease\n      });\n    };\n    var zaaktypeFields = zaaktypeFilterArr.map(function (location, index) {\n      return /*#__PURE__*/React.createElement(Fragment, {\n        key: index\n      }, /*#__PURE__*/React.createElement(TextControl, {\n        className: \"ogz-ztfilter_add\",\n        placeholder: \"B1026\",\n        value: zaaktypeFilterArr[index],\n        onChange: function onChange(ztUri) {\n          return changeZTFilter(ztUri, index);\n        }\n      }), /*#__PURE__*/React.createElement(IconButton, {\n        className: \"ogz-ztfilter_remove\",\n        icon: \"no-alt\",\n        label: \"Verwijder Zaaktype filter\",\n        onClick: function onClick() {\n          return removeZTFilter(index);\n        }\n      }));\n    });\n    return /*#__PURE__*/React.createElement(\"div\", blockProps, /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(Panel, null, /*#__PURE__*/React.createElement(PanelBody, {\n      title: \"Zaaksysteem\",\n      initialOpen: false\n    }, /*#__PURE__*/React.createElement(\"p\", null, \"Selecteer het zaaksysteem waaruit de zaken opgehaald moeten worden.\"), /*#__PURE__*/React.createElement(SelectControl, {\n      label: \"Zaaksysteem\",\n      value: zaakClient,\n      options: [{\n        label: 'OpenZaak',\n        value: 'openzaak'\n      }, {\n        label: 'Decos JOIN',\n        value: 'decos-join'\n      }, {\n        label: 'Rx.Mission',\n        value: 'rx-mission'\n      }, {\n        label: 'xxllnc',\n        value: 'xxllnc'\n      }, {\n        label: 'Procura',\n        value: 'procura'\n      }],\n      onChange: function onChange(newzaakClient) {\n        return setAttributes({\n          zaakClient: newzaakClient\n        });\n      }\n    }), /*#__PURE__*/React.createElement(CheckboxControl, {\n      label: \"Gecombineerde zaaksystemen\",\n      help: \"Toon zaken uit gecombineerde zaaksystemen.\",\n      checked: combinedClients,\n      onChange: function onChange(combinedClients) {\n        return setAttributes({\n          combinedClients: combinedClients\n        });\n      }\n    }), /*#__PURE__*/React.createElement(CheckboxControl, {\n      label: \"Filter op BSN\",\n      help: \"Filter zaken die aangemaakt zijn door de ingelogde gebruiker op basis van het BSN nummer.\",\n      checked: byBSN,\n      onChange: function onChange(byBSN) {\n        return setAttributes({\n          byBSN: byBSN\n        });\n      }\n    }), /*#__PURE__*/React.createElement(SelectControl, {\n      label: \"Sorteer op\",\n      value: orderBy,\n      options: [{\n        label: 'Startdatum',\n        value: 'startdatum'\n      }, {\n        label: 'Einddatum',\n        value: 'einddatum'\n      }, {\n        label: 'Publicatiedatum',\n        value: 'publicatiedatum'\n      }, {\n        label: 'Archiefactiedatum',\n        value: 'archiefactiedatum'\n      }, {\n        label: 'Registratiedatum',\n        value: 'registratiedatum'\n      }, {\n        label: 'Identificatie',\n        value: 'identificatie'\n      }],\n      onChange: function onChange(neworderBy) {\n        return setAttributes({\n          orderBy: neworderBy\n        });\n      }\n    })), /*#__PURE__*/React.createElement(PanelBody, {\n      title: \"Zaaktype configuratie\",\n      initialOpen: false\n    }, /*#__PURE__*/React.createElement(PanelRow, null, \"Zaaktypes\"), zaaktypeFields, /*#__PURE__*/React.createElement(Button, {\n      isDefault: true,\n      icon: \"plus\",\n      onClick: addZTFilter.bind(_this)\n    }, \"Voeg een Zaaktype identificatie toe\")), attributes.view === 'current' && /*#__PURE__*/React.createElement(PanelBody, null, /*#__PURE__*/React.createElement(RangeControl, {\n      min: 1,\n      max: 20,\n      label: \"Aantal\",\n      help: \"Het aantal zaken dat getoond moeten worden.\",\n      value: attributes.numberOfItems,\n      onChange: function onChange(value) {\n        return setAttributes({\n          numberOfItems: value\n        });\n      }\n    })), /*#__PURE__*/React.createElement(PanelBody, {\n      title: \"Weergave\",\n      initialOpen: false\n    }, /*#__PURE__*/React.createElement(SelectControl, {\n      label: \"Selecteer de weergave van de zaken\",\n      value: attributes.view,\n      options: [{\n        label: 'Standaard',\n        value: 'default'\n      }, {\n        label: 'Tabbladen',\n        value: 'tabs'\n      }, {\n        label: 'Lopende Zaken',\n        value: 'current'\n      }],\n      onChange: function onChange(newView) {\n        return setAttributes({\n          view: newView\n        });\n      }\n    })))), attributes.view === 'default' ? /*#__PURE__*/React.createElement(\"p\", null, \"Standaardweergave\") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\"ul\", {\n      className: \"zaak-tabs | nav nav-tabs\",\n      id: \"zaak-tabs\",\n      role: \"tablist\"\n    }, /*#__PURE__*/React.createElement(\"li\", {\n      className: \"nav-item\",\n      role: \"presentation\"\n    }, /*#__PURE__*/React.createElement(\"button\", {\n      className: \"zaak-tabs-link | nav-link active\"\n    }, \"Lopende zaken\")), /*#__PURE__*/React.createElement(\"li\", {\n      className: \"nav-item\",\n      role: \"presentation\"\n    }, /*#__PURE__*/React.createElement(\"button\", {\n      className: \"zaak-tabs-link | nav-link\"\n    }, \"Afgeronde zaken\"))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"tab-content\",\n      id: \"myTabContent\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"tab-pane fade show active\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-wrapper\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanvragen uittreksel BRP\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"12 december 2023\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-tag\"\n    }, \"Dummy content\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanmelden straatfeest\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"15 oktober 2023\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanvraag rijbewijs\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"20 januari 2023\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card\"\n    }, /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-svg\",\n      width: \"385\",\n      height: \"200\",\n      viewBox: \"0 0 385 200\",\n      fill: \"#F1F1F1\",\n      xmlns: \"http://www.w3.org/2000/svg\",\n      preserveAspectRatio: \"none\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M260.532 17.39L249.736 1.32659C249.179 0.497369 248.246 0 247.246 0H3C1.34315 0 0 1.34314 0 3V197C0 198.657 1.34315 200 3.00001 200H381.485C383.142 200 384.485 198.657 384.485 197V109.358V21.7166C384.485 20.0597 383.142 18.7166 381.485 18.7166H263.022C262.023 18.7166 261.089 18.2192 260.532 17.39Z\"\n    })), /*#__PURE__*/React.createElement(\"h2\", {\n      className: \"zaak-card-title\"\n    }, \"Aanvragen leefbaarheidsbudget\"), /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-footer\"\n    }, /*#__PURE__*/React.createElement(\"div\", {\n      className: \"zaak-card-date\"\n    }, \"11 januari 2023\"), /*#__PURE__*/React.createElement(\"svg\", {\n      className: \"zaak-card-arrow\",\n      width: \"24\",\n      height: \"24\",\n      viewBox: \"0 0 24 24\",\n      xmlns: \"http://www.w3.org/2000/svg\"\n    }, /*#__PURE__*/React.createElement(\"path\", {\n      d: \"M12.2929 5.29289C12.6834 4.90237 13.3166 4.90237 13.7071 5.29289L19.7071 11.2929C19.8946 11.4804 20 11.7348 20 12C20 12.2652 19.8946 12.5196 19.7071 12.7071L13.7071 18.7071C13.3166 19.0976 12.6834 19.0976 12.2929 18.7071C11.9024 18.3166 11.9024 17.6834 12.2929 17.2929L16.5858 13L5 13C4.44772 13 4 12.5523 4 12C4 11.4477 4.44772 11 5 11L16.5858 11L12.2929 6.70711C11.9024 6.31658 11.9024 5.68342 12.2929 5.29289Z\"\n    })))))))));\n  },\n  save: function save(_ref2) {\n    var className = _ref2.className;\n    return /*#__PURE__*/React.createElement(\"section\", {\n      className: className\n    });\n  }\n});\n\n//# sourceURL=webpack://owc-gravityforms-zaaksysteem/./resources/js/editor/mijn-zaken.js?");
+
+/***/ }),
+
+/***/ "./resources/js/editor/register-blocks.js":
+/*!************************************************!*\
+  !*** ./resources/js/editor/register-blocks.js ***!
+  \************************************************/
+/***/ (() => {
+
+eval("var registerBlockType = wp.blocks.registerBlockType;\nvar _wp = wp,\n  ServerSideRender = _wp.serverSideRender;\nregisterBlockType(\"owc/gravityforms-zaaksysteem\", {\n  title: \"Zaken\",\n  category: \"theme\",\n  edit: function edit() {\n    return /*#__PURE__*/React.createElement(ServerSideRender, {\n      block: \"owc/gravityforms-zaaksysteem\"\n    });\n  },\n  save: function save() {\n    return function () {\n      return null;\n    };\n  }\n});\n\n//# sourceURL=webpack://owc-gravityforms-zaaksysteem/./resources/js/editor/register-blocks.js?");
 
 /***/ })
 
@@ -446,18 +106,23 @@ registerBlockType("owc/gravityforms-zaaksysteem", {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
 /******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-/* harmony import */ var _register_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(788);
-/* harmony import */ var _register_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_register_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mijn_zaken__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(682);
-/* harmony import */ var _mijn_zaken__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_mijn_zaken__WEBPACK_IMPORTED_MODULE_1__);
-
-
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module can't be inlined because the eval devtool is used.
+/******/ 	var __webpack_exports__ = __webpack_require__("./resources/js/editor/index.js");
+/******/ 	
 /******/ })()
 ;

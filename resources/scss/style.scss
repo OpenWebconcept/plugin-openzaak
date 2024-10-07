@@ -6,15 +6,18 @@
 @import '~bootstrap/scss/nav';
 @import '~bootstrap/scss/root';
 
-@import './zaak/zaak-card'; 
-@import './zaak/zaak-collapse-button'; 
-@import './zaak/zaak-content'; 
-@import './zaak/zaak-details'; 
-@import './zaak/zaak-documents'; 
-@import './zaak/zaak-header'; 
-@import './zaak/zaak-meta'; 
-@import './zaak/zaak-process'; 
-@import './zaak/zaak-tabs'; 
+@import './taak/taak-card';
+@import './taak/taak-content';
+
+@import './zaak/zaak-card';
+@import './zaak/zaak-collapse-button';
+@import './zaak/zaak-content';
+@import './zaak/zaak-details';
+@import './zaak/zaak-documents';
+@import './zaak/zaak-header';
+@import './zaak/zaak-meta';
+@import './zaak/zaak-process';
+@import './zaak/zaak-tabs';
 
 @import './editor/mijn-zaken';
 

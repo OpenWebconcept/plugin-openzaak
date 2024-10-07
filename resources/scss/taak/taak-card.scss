@@ -1,0 +1,137 @@
+$component: 'taak-card';
+
+
+.#{$component} {
+  position: relative;
+  z-index: 1;
+  padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+  color: var(--grey-4, #4B4B4B);
+  border-radius: var(--card-border-radius, 5px);
+  transition: var(--card-transition, all 0.2s ease);
+  cursor: pointer;
+  display: flex;
+  min-height: 190px;
+  flex-direction: column;
+
+  &::before {
+    position: absolute;
+    z-index: -2;
+    top: 0;
+    right: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--grey-2, #D2D2D2);
+    content: "";
+    border-radius: var(--card-border-radius, 5px);
+    transition: var(--card-transition, all 0.2s ease);
+  }
+
+  &::after {
+    position: absolute;
+    z-index: -2;
+    top: 8px;
+    right: 8px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--white, #fff);
+    content: "";
+    border-radius: var(--card-border-radius, 5px);
+    transition: var(--card-transition, all 0.2s ease);
+  }
+
+
+  &:hover {
+    transform: translateY(-4px);
+
+    &::before,
+    &::after {
+      transform: translateY(-6px);
+    }
+  }
+
+  &-svg {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &-title {
+    color: inherit;
+    margin-bottom: 1rem;
+
+		a {
+			color: inherit;
+			text-decoration: none;
+
+			&::after {
+				position: absolute;
+				top: 0;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				content: '';
+			}
+
+			&:hover {
+				color: inherit;
+				text-decoration: none;
+			}
+		}
+  }
+
+  &-footer {
+    margin-top: auto;
+    display: flex;
+    line-height: 1.2;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-date {
+    text-transform: lowercase;
+  }
+
+  &-tag {
+    margin-left: auto;
+    font-size: 0.8rem;
+    background-color: var(--primary-300, #001D5F);
+    padding: 0.25rem 0.5rem;
+    font-weight: 700;
+    border-radius: var(--card-border-radius, 5px);
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  &.active {
+    color: var(--primary-300, #001D5F);
+
+    &::before {
+      background-color: var(--primary-200, #4D6EB9);
+    }
+
+    .#{$component}-svg {
+      fill: var(--primary-100, #E9EFFF);
+    }
+
+    .#{$component}-arrow {
+      fill: var(--primary-300, #4D6EB9);
+    }
+  }
+}
+
+.#{$component}-wrapper {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  display: grid;
+  gap: 2rem;
+
+  @media screen and (min-width: 950px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}

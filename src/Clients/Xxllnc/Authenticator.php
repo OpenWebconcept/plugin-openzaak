@@ -11,11 +11,13 @@ class Authenticator extends AbstractTokenAuthenticator
 {
     protected string $clientId;
     protected string $clientSecret;
+    protected string $mijnTakenApiKey;
 
-    public function __construct(string $clientId, string $clientSecret)
+    public function __construct(string $clientId, string $clientSecret, string $mijnTakenApiKey)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
+        $this->mijnTakenApiKey = $mijnTakenApiKey;
     }
 
     public function generateToken(): string

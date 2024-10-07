@@ -7,6 +7,7 @@ namespace OWC\Zaaksysteem\Contracts;
 abstract class AbstractTokenAuthenticator implements TokenAuthenticator
 {
     protected string $clientSecret;
+    protected string $mijnTakenApiKey;
 
     abstract public function generateToken(): string;
 
@@ -28,5 +29,10 @@ abstract class AbstractTokenAuthenticator implements TokenAuthenticator
     public function getAuthString(): string
     {
         return sprintf('Bearer %s', $this->generateToken());
+    }
+
+    public function getApiKeyMijnTaken(): string
+    {
+        return $this->mijnTakenApiKey;
     }
 }

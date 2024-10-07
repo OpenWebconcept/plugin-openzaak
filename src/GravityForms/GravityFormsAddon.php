@@ -333,6 +333,18 @@ class GravityFormsAddon extends GFAddOn
                     'class' => 'medium',
                     'name' => "{$this->prefix}-rx-mission-client-secret",
                 ],
+                [
+                    'label' => esc_html__('Mijn taken URL', 'owc-gravityforms-zaaksysteem'),
+                    'type' => 'text',
+                    'class' => 'medium',
+                    'name' => "{$this->prefix}-rx-mission-mijn-taken-url",
+                ],
+                [
+                    'label' => esc_html__('Mijn taken API key', 'owc-gravityforms-zaaksysteem'),
+                    'type' => 'text',
+                    'class' => 'medium',
+                    'name' => "{$this->prefix}-rx-mission-mijn-taken-api-key",
+                ],
             ],
         ];
     }
@@ -385,6 +397,18 @@ class GravityFormsAddon extends GFAddOn
                     'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-xxllnc-client-secret",
+                ],
+                [
+                    'label' => esc_html__('Mijn taken URL', 'owc-gravityforms-zaaksysteem'),
+                    'type' => 'text',
+                    'class' => 'medium',
+                    'name' => "{$this->prefix}-xxllnc-mijn-taken-url",
+                ],
+                [
+                    'label' => esc_html__('Mijn taken API key', 'owc-gravityforms-zaaksysteem'),
+                    'type' => 'text',
+                    'class' => 'medium',
+                    'name' => "{$this->prefix}-xxllnc-mijn-taken-api-key",
                 ],
             ],
         ];

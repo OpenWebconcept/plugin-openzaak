@@ -8,6 +8,7 @@ use InvalidArgumentException;
 use OWC\Zaaksysteem\Http\RequestClientInterface;
 use OWC\Zaaksysteem\Http\RequestOptions;
 use OWC\Zaaksysteem\Http\Response;
+
 use function Yard\DigiD\Foundation\Helpers\config;
 
 class WordPressRequestClient implements RequestClientInterface

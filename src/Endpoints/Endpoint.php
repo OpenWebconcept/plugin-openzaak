@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace OWC\Zaaksysteem\Endpoints;
 
-use OWC\Zaaksysteem\Http\PageMeta;
-use OWC\Zaaksysteem\Http\Response;
-use OWC\Zaaksysteem\Entities\Entity;
 use OWC\Zaaksysteem\Contracts\Client;
-use OWC\Zaaksysteem\Support\Collection;
-use OWC\Zaaksysteem\Http\Handlers\Stack;
-use OWC\Zaaksysteem\Http\RequestOptions;
-use OWC\Zaaksysteem\Support\PagedCollection;
-use OWC\Zaaksysteem\Http\RequestClientInterface;
 use OWC\Zaaksysteem\Contracts\TokenAuthenticator;
 use OWC\Zaaksysteem\Endpoints\Traits\SupportsExpand;
+use OWC\Zaaksysteem\Entities\Entity;
+use OWC\Zaaksysteem\Http\Handlers\Stack;
+use OWC\Zaaksysteem\Http\PageMeta;
+use OWC\Zaaksysteem\Http\RequestClientInterface;
+use OWC\Zaaksysteem\Http\RequestOptions;
+use OWC\Zaaksysteem\Http\Response;
+use OWC\Zaaksysteem\Support\Collection;
+use OWC\Zaaksysteem\Support\PagedCollection;
 
 abstract class Endpoint
 {
@@ -50,7 +50,7 @@ abstract class Endpoint
     {
         return new RequestOptions([
             'headers' => [
-                'Authorization' => $this->authenticator->getAuthString(),
+                'Authorization' => $this->apiType !== 'taken' ? $this->authenticator->getAuthString() : $this->authenticator->getApiKeyMijnTaken(),
             ],
         ]);
     }

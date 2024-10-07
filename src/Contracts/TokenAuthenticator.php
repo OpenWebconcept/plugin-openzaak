@@ -9,4 +9,5 @@ interface TokenAuthenticator
     public function generateToken(): string;
     public function setClientSecret(string $clientSecret): self;
     public function getAuthString(): string;
+    public function getApiKeyMijnTaken(): string;
 }

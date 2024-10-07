@@ -16,6 +16,7 @@ use OWC\Zaaksysteem\Endpoints\RollenEndpoint;
 use OWC\Zaaksysteem\Endpoints\RoltypenEndpoint;
 use OWC\Zaaksysteem\Endpoints\StatussenEndpoint;
 use OWC\Zaaksysteem\Endpoints\StatustypenEndpoint;
+use OWC\Zaaksysteem\Endpoints\TakenEndpoint;
 use OWC\Zaaksysteem\Endpoints\ZaakeigenschappenEndpoint;
 use OWC\Zaaksysteem\Endpoints\ZaakinformatieobjectenEndpoint;
 use OWC\Zaaksysteem\Endpoints\ZaakobjectenEndpoint;
@@ -67,5 +68,8 @@ class Client extends AbstractClient
         // 'gebruiksrechten' => Endpoint::class,
         // 'objectinformatieobjecten' => Endpoint::class,
         // 'bestandsdelen' => Endpoint::class,
+
+        // Mijn Taken API
+        'taken' => [TakenEndpoint::class, 'taken'],
     ];
 }
