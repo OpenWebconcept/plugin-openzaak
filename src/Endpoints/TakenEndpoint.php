@@ -9,7 +9,7 @@ use OWC\Zaaksysteem\Support\PagedCollection;
 
 class TakenEndpoint extends Endpoint
 {
-    protected string $apiType = 'taken';
+    // protected string $apiType = 'taken';
     protected string $endpoint = 'taken';
     protected string $entityClass = Taak::class;
 

@@ -22,16 +22,18 @@ abstract class Endpoint
 
     protected Client $client;
     protected string $endpointURL = '';
+    protected string $apiType = '';
     protected RequestClientInterface $httpClient;
     protected TokenAuthenticator $authenticator;
     protected Stack $responseHandlers;
 
     protected string $entityClass = Entity::class;
 
-    public function __construct(Client $client, string $endpointURL)
+    public function __construct(Client $client, string $endpointURL, string $apiType)
     {
         $this->client = $client;
         $this->endpointURL = $endpointURL;
+        $this->apiType = $apiType;
         $this->httpClient = $client->getRequestClient();
         $this->authenticator = $client->getAuthenticator();
         $this->responseHandlers = Stack::create();
@@ -50,7 +52,7 @@ abstract class Endpoint
     {
         return new RequestOptions([
             'headers' => [
-                'Authorization' => $this->apiType !== 'taken' ? $this->authenticator->getAuthString() : $this->authenticator->getApiKeyMijnTaken(),
+                'Authorization' => 'taken' === $this->apiType ? $this->authenticator->getApiKeyMijnTaken() : $this->authenticator->getAuthString(),
             ],
         ]);
     }
@@ -72,7 +74,7 @@ abstract class Endpoint
 
         if ($this->endpointSupportsExpand() && $this->expandIsEnabled()) {
             $uri = add_query_arg([
-                'expand' => implode(',', $this->getExpandableResources())
+                'expand' => implode(',', $this->getExpandableResources()),
             ], $uri);
         }
 

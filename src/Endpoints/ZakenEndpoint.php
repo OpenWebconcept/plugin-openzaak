@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace OWC\Zaaksysteem\Endpoints;
 
-use OWC\Zaaksysteem\Http\Response;
-use OWC\Zaaksysteem\Entities\Zaak;
 use OWC\Zaaksysteem\Entities\Entity;
 use OWC\Zaaksysteem\Entities\Status;
+use OWC\Zaaksysteem\Entities\Zaak;
+use OWC\Zaaksysteem\Http\Response;
+use OWC\Zaaksysteem\Resolvers\ContainerResolver;
 use OWC\Zaaksysteem\Support\Collection;
 use OWC\Zaaksysteem\Support\PagedCollection;
-use OWC\Zaaksysteem\Resolvers\ContainerResolver;
 
 class ZakenEndpoint extends Endpoint
 {
-    protected string $apiType = 'zaken';
     protected string $endpoint = 'zaken';
     protected string $entityClass = Zaak::class;
 

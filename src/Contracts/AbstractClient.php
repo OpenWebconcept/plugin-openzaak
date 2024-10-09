@@ -6,11 +6,11 @@ namespace OWC\Zaaksysteem\Contracts;
 
 use InvalidArgumentException;
 use OWC\Zaaksysteem\Endpoints\Endpoint;
+use function OWC\Zaaksysteem\Foundation\Helpers\resolve;
 use OWC\Zaaksysteem\Http\Errors\ResourceNotFoundError;
 use OWC\Zaaksysteem\Http\Errors\ServerError;
-use OWC\Zaaksysteem\Http\RequestClientInterface;
 
-use function OWC\Zaaksysteem\Foundation\Helpers\resolve;
+use OWC\Zaaksysteem\Http\RequestClientInterface;
 use function Yard\DigiD\Foundation\Helpers\config;
 
 abstract class AbstractClient implements Client
@@ -92,7 +92,7 @@ abstract class AbstractClient implements Client
 
             $this->setClientSecretByType($type);
 
-            $endpoint = new $class($this, $this->getEndpointUrlByType($type));
+            $endpoint = new $class($this, $this->getEndpointUrlByType($type), $type);
             $this->container[$key] = $endpoint;
         }
 
