@@ -8,11 +8,11 @@ use Exception;
 use OWC\Zaaksysteem\Contracts\Client;
 use OWC\Zaaksysteem\Endpoints\Filter\TakenFilter;
 use OWC\Zaaksysteem\Endpoints\Filter\ZakenFilter;
-use OWC\Zaaksysteem\Resolvers\ContainerResolver;
-use OWC\Zaaksysteem\Support\Collection;
-
 use function OWC\Zaaksysteem\Foundation\Helpers\resolve;
 use function OWC\Zaaksysteem\Foundation\Helpers\view;
+
+use OWC\Zaaksysteem\Resolvers\ContainerResolver;
+use OWC\Zaaksysteem\Support\Collection;
 
 class Block
 {
@@ -64,11 +64,11 @@ class Block
          * TEMP: signicat plugin has some changes pending which requires another implementation.
          */
         if (empty($bsn)) {
-            $isLoggedIn = apply_filters('owc_siginicat_openid_is_user_logged_in', false, 'digid');
+            $isLoggedIn = apply_filters('owc_digid_is_logged_in', false, 'digid');
 
             if ($isLoggedIn) {
-                $userInfo = apply_filters('owc_signicat_openid_user_info', [], 'digid');
-                $bsn = $userInfo['sub'] ?? '';
+                $userInfo = apply_filters('owc_digid_userdata', null, 'digid');
+                $bsn = $userInfo->getBsn();
             }
 
             return ! empty($bsn) && is_string($bsn) ? $bsn : '';
@@ -97,20 +97,21 @@ class Block
 
     protected function getZaken(array $attributes): Collection
     {
-        return Collection::collect([
-            'https://api.accept.common-gateway.commonground.nu/api/zrc/v1/zaken/f5d1c9b7-e3a9-485d-98cb-1667e1d0537c'
-        ]);
+        // return Collection::collect([
+        //     'https://api.accept.common-gateway.commonground.nu/api/zrc/v1/zaken/f5d1c9b7-e3a9-485d-98cb-1667e1d0537c',
+        // ]);
 
+        // return $this->client->zaken()->all();
         // When mijn-taken api is properly configured this should be activated again.
-        // $filter = new ZakenFilter();
-        // $filter = $this->handleFilterBSN($filter, $attributes);
+        $filter = new ZakenFilter();
+        $filter = $this->handleFilterBSN($filter, $attributes);
 
-        // return $this->client->zaken()->filter($filter);
+        return $this->client->zaken()->filter($filter);
     }
 
     protected function handleFilterBSN(ZakenFilter $filter, array $attributes): ZakenFilter
     {
-        if (! $attributes['byBSN']) {
+        if (! ($attributes['byBSN'] ?? false)) {
             return $filter;
         }
 
@@ -125,14 +126,14 @@ class Block
 
         foreach ($zaken as $zaak) {
             $filter = new TakenFilter();
-            // $filter->byZaak($zaak->url);
-            $filter->byZaakURL($zaak); // Above should be activated again when the mijn-taken api is properly configured.
+            $filter->byZaak($zaak);
             $fetchedTaken = $this->client->taken()->filter($filter);
 
             if ($fetchedTaken->isNotEmpty()) {
                 $taken[] = $fetchedTaken->toArray();
             }
         }
+        // Misschien nog filteren hier?
 
         return Collection::collect($taken)->flattenAndAssign(function ($carry, $item) {
             if (is_array($item)) {
@@ -147,7 +148,7 @@ class Block
 
     protected function returnView(array $attributes, Collection $taken): string
     {
-        if ($attributes['view'] === 'default') {
+        if ('default' === $attributes['view']) {
             return view('blocks/mijn-taken/overview-taken.php', ['taken' => $taken]);
         }
 

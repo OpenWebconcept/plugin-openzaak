@@ -2,8 +2,8 @@
 $isActive = $vars['isActive'] ?? false;
 $title = $vars['title'] ?? '';
 $clarification = $vars['clarification'] ?? '';
-$date = $date ?? '';
-$link = $link ?? '';
+$date = $vars['date'] ?? '';
+$link = $vars['link'] ?? '';
 ?>
 <div class="taak-card <?php echo $isActive ? 'active' : ''; ?>">
 	<svg class="taak-card-svg" width="385" height="200" viewBox="0 0 385 200" fill="#F1F1F1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">

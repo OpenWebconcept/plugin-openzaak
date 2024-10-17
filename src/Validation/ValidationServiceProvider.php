@@ -34,13 +34,13 @@ class ValidationServiceProvider extends ServiceProvider
              *
              * @param array $templatesToValidate Template names to validate
              */
-            $templatesToValidate = apply_filters('owc_gravityforms_zaaksysteem_templates_to_validate', ['template-openzaak']);
+            $templatesToValidate = apply_filters('owc_gravityforms_zaaksysteem_templates_to_validate', ['template-openzaak', 'template-mijn-taken']);
 
             if (! in_array($templateName, $templatesToValidate)) {
                 return $template;
             }
 
-            if (empty(ContainerResolver::make()->get('digid.current_user_bsn'))) {
+            if (empty(ContainerResolver::make()->get('digid.current_user_bsn')) && 'template-openzaak' === $templateName) {
                 return $this->returnForbidden();
             }
 

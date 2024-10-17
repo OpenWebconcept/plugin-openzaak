@@ -7,6 +7,7 @@ namespace OWC\Zaaksysteem\Entities;
 use ArrayAccess;
 use Exception;
 use JsonSerializable;
+use TypeError;
 
 abstract class Entity implements
     ArrayAccess,
@@ -33,7 +34,7 @@ abstract class Entity implements
     {
         try {
             return $this->getValue($name);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             return null; // Returning null is in line with the return types of the methods inside the cast classes.
         }
     }
@@ -63,7 +64,7 @@ abstract class Entity implements
 
             try {
                 $value = $caster->set($this, $name, $value);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 return;
             }
         }
@@ -124,7 +125,11 @@ abstract class Entity implements
     protected function hydrate(array $data)
     {
         foreach ($data as $name => $value) {
-            $this->setValue($name, $value);
+            try {
+                $this->setValue($name, $value);
+            } catch (TypeError | Exception $e) {
+                continue;
+            }
         }
     }
 }

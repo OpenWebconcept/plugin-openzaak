@@ -39,4 +39,14 @@ abstract class AbstractRoutingController
 
         return 'template-single-zaak' === $templateName;
     }
+
+    /**
+     * Some handle functions require the 'template-single-taak' template.
+     */
+    protected function isTemplateSingleTaak(string $template): bool
+    {
+        $templateName = str_replace(['.blade.php', '.php'], '', basename($template));
+
+        return 'template-single-taak' === $templateName;
+    }
 }

@@ -57,5 +57,11 @@ register_activation_hook(__FILE__, function () {
  * and wp_loaded action hooks.
  */
 \add_action('plugins_loaded', function () {
+    add_filter('http_request_args', function ($r, $url) {
+        $r['sslverify'] = false;
+
+        return $r;
+    }, 10, 2);
+
     Foundation\Plugin::getInstance(__DIR__)->boot();
 }, 10);

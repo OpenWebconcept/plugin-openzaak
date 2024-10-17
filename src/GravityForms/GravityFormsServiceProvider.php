@@ -31,7 +31,37 @@ class GravityFormsServiceProvider extends ServiceProvider
         $this->plugin->loader->addAction('gform_editor_js', $gravityFormsFieldSettings, 'addSelectScript', 10, 0);
         $this->plugin->loader->addFilter('gform_form_settings_fields', new GravityFormsFormSettings(), 'addFormSettings', 10, 2);
 
-        // dd(\OWC\Zaaksysteem\Resolvers\ContainerResolver::make()->get('xxllnc.mijn_taken_uri'));
+        // Mijn taken
+        add_action('gform_pre_render', function ($form) {
+            $taak = get_query_var('taak');
+
+            if (! is_object($taak)) {
+                return $form;
+            }
+
+            $zaak = $taak->getValue('zaak');
+
+            if ($taak->informationObjectURL()) { // $fields[0] moet wel upload veld zijn
+                $form['fields'][0]->linkedFieldValueZGW = 'informatieobject';
+                $form['fields'][0]->linkedFieldValueDocumentType = $taak->informationObjectURL();
+            }
+
+            if ($taak->supplier()) {
+                // Zoeken naar veld met label 'supplier'
+                $form['fields'][1]->defaultValue = $taak->supplier();
+            }
+
+            if (! is_null($zaak)) {
+                // Zoeken naar veld met label 'zaak'
+                $form['fields'][2]->defaultValue = $zaak->id;
+            }
+
+            $form['fields'][3]->defaultValue = $taak->id;
+            $form['fields'][4]->defaultValue = $taak->title();
+            $form['fields'][5]->defaultValue = $taak->informationObjectURL();
+
+            return $form;
+        }, 10, 1);
     }
 
     /**

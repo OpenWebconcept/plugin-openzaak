@@ -20,6 +20,7 @@ class TemplatingServiceProvider extends ServiceProvider
          */
         add_filter('theme_page_templates', function ($postTemplates) {
             $postTemplates['template-openzaak.php'] = esc_html__('OpenZaak', 'owc-gravityforms-zaaksysteem');
+            $postTemplates['template-mijn-taken.php'] = esc_html__('Mijn Taken', 'owc-gravityforms-zaaksysteem');
 
             return $postTemplates;
         }, 10, 4);
@@ -30,6 +31,10 @@ class TemplatingServiceProvider extends ServiceProvider
         add_filter('page_template', function ($pageTemplate) {
             if (get_page_template_slug() === 'template-openzaak.php') {
                 $pageTemplate = sprintf('%s/%s', OWC_GZ_ROOT_PATH, 'resources/views/template-openzaak.php');
+            }
+
+            if (get_page_template_slug() === 'template-mijn-taken.php') {
+                $pageTemplate = sprintf('%s/%s', OWC_GZ_ROOT_PATH, 'resources/views/template-mijn-taken.php');
             }
 
             return $pageTemplate;

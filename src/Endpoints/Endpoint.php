@@ -52,7 +52,7 @@ abstract class Endpoint
     {
         return new RequestOptions([
             'headers' => [
-                'Authorization' => 'taken' === $this->apiType ? $this->authenticator->getApiKeyMijnTaken() : $this->authenticator->getAuthString(),
+                'Authorization' => 'taken' === $this->apiType || $this->client->getClientNamePretty() === 'rx-mission' ? $this->authenticator->getApiKeyMijnTaken() : $this->authenticator->getAuthString(),
             ],
         ]);
     }
@@ -106,9 +106,11 @@ abstract class Endpoint
 
     protected function mapEntities(array $data): array
     {
-        return array_map(function ($item) {
-            return $this->buildEntity($item);
+        $entities = array_map(function ($item) {
+            return is_array($item) ? $this->buildEntity($item) : null;
         }, $data);
+
+        return array_filter($entities);
     }
 
     protected function buildEntity($data): Entity

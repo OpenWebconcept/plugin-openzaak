@@ -2,7 +2,6 @@
 
 namespace OWC\Zaaksysteem\Endpoints\Filter;
 
-use DateTimeInterface;
 use OWC\Zaaksysteem\Entities\Zaak;
 
 class TakenFilter extends AbstractFilter
@@ -28,16 +27,5 @@ class TakenFilter extends AbstractFilter
     public function byZaak(Zaak $zaak)
     {
         return $this->add('zaak', $zaak->url);
-    }
-
-    /**
-     * Temp: this should be removed when the mijn-taken api is properly configured.
-     *
-     * @param [type] $zaak
-     * @return void
-     */
-    public function byZaakURL($zaak)
-    {
-        return $this->add('zaak', $zaak);
     }
 }

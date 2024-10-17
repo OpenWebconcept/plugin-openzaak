@@ -18,6 +18,7 @@ use function OWC\Zaaksysteem\Foundation\Helpers\view;
 			        'title' => $taak->title(),
 			        'clarification' => $taak->clarification(),
 			        'isActive' => true,
+			        'link' => $taak->permalink(),
 			    ]);
 			} ?>
 		</div>

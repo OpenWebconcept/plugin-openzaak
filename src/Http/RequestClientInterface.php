@@ -11,5 +11,6 @@ interface RequestClientInterface
     public function getRequestOptions(): RequestOptions;
     public function get(string $url, ?RequestOptions $options = null): Response;
     public function post(string $url, $body, ?RequestOptions $options = null): Response;
+    public function update(string $url, $body, ?RequestOptions $options = null): Response;
     public function delete(string $url, ?RequestOptions $options = null): Response;
 }

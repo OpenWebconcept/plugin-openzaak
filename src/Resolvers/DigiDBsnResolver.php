@@ -34,11 +34,11 @@ class DigiDBsnResolver implements BsnResolver
          * TEMP: signicat plugin has some changes pending which requires another implementation.
          */
         if (empty($bsn)) {
-            $isLoggedIn = apply_filters('owc_siginicat_openid_is_user_logged_in', false, 'digid');
+            $isLoggedIn = apply_filters('owc_digid_is_logged_in', false, 'digid');
 
             if ($isLoggedIn) {
-                $userInfo = apply_filters('owc_signicat_openid_user_info', [], 'digid');
-                $bsn = $userInfo['sub'] ?? '';
+                $userInfo = apply_filters('owc_digid_userdata', null, 'digid');
+                $bsn = $userInfo->getBsn();
             }
 
             return ! empty($bsn) && is_string($bsn) ? $bsn : '';
