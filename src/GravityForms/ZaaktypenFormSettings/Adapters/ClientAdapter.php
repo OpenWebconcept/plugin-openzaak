@@ -95,7 +95,11 @@ class ClientAdapter implements ClientInterface
 
         while ($page) {
             try {
-                $result = $this->client->$endpoint()->all((new ResultaattypenFilter())->byStatus('definitief')->page($page));
+                if ($this->getClientNamePretty() === 'decos-join') {
+                    $result = $this->client->$endpoint()->all((new ResultaattypenFilter())->byStatusMijnOmgeving()->page($page));
+                } else {
+                    $result = $this->client->$endpoint()->all((new ResultaattypenFilter())->byStatusDefinitief()->page($page));
+                }
             } catch (Exception $e) {
                 $requestException = $e->getMessage();
 

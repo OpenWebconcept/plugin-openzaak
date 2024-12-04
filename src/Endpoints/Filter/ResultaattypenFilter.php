@@ -34,4 +34,9 @@ class ResultaattypenFilter extends AbstractFilter
     {
         return $this->add('status', 'alles');
     }
+
+    public function byStatusMijnOmgeving()
+    {
+        return $this->add('status', 'mijnomgeving');
+    }
 }
