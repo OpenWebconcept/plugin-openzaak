@@ -95,7 +95,7 @@ class ClientAdapter implements ClientInterface
 
         while ($page) {
             try {
-                $result = $this->client->$endpoint()->all((new ResultaattypenFilter())->page($page));
+                $result = $this->client->$endpoint()->all((new ResultaattypenFilter())->byStatus('definitief')->page($page));
             } catch (Exception $e) {
                 $requestException = $e->getMessage();
 
