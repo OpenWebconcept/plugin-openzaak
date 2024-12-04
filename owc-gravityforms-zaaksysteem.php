@@ -56,12 +56,6 @@ register_activation_hook(__FILE__, function () {
  * plugin overrides. The plugins_loaded action hook fires early, and precedes the setup_theme, after_setup_theme, init
  * and wp_loaded action hooks.
  */
-\add_action('plugins_loaded', function () {
-    add_filter('http_request_args', function ($r, $url) {
-        $r['sslverify'] = false;
-
-        return $r;
-    }, 10, 2);
-
+add_action('plugins_loaded', function () {
     Foundation\Plugin::getInstance(__DIR__)->boot();
 }, 10);

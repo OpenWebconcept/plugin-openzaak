@@ -18,6 +18,7 @@ class WordPressRequestClient implements RequestClientInterface
     public function __construct(?RequestOptions $options = null)
     {
         $this->options = $options ?: new RequestOptions([]);
+        $this->conditionallyDisableSslVerification();
     }
 
     public function applyCurlSslCertificates(): self
@@ -35,6 +36,18 @@ class WordPressRequestClient implements RequestClientInterface
         });
 
         return $this;
+    }
+
+    /**
+     * Some 'zaaksystemen' require SSL verification to be disabled since they are using ip-addresses insteaf of a domain.
+     */
+    private function conditionallyDisableSslVerification(): void
+    {
+        $shouldDisable = (bool) apply_filters('owc_gravityforms_zaaksysteem_disable_ssl_verification', false);
+
+        if ($shouldDisable) {
+            add_filter('https_ssl_verify', '__return_false');
+        }
     }
 
     public function setRequestOptions(RequestOptions $options): self
