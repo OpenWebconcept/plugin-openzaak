@@ -8,10 +8,13 @@ use Exception;
 use OWC\Zaaksysteem\Endpoints\Filter\ZakenFilter;
 use OWC\Zaaksysteem\Entities\Zaak;
 use function OWC\Zaaksysteem\Foundation\Helpers\resolve;
+use OWC\Zaaksysteem\Traits\ZaakIdentification;
 use WP_Rewrite;
 
 class SingleZaakRoutingController extends AbstractRoutingController
 {
+    use ZaakIdentification;
+
     public function register(): void
     {
         $this->addCustomRewriteRules();
@@ -84,12 +87,12 @@ class SingleZaakRoutingController extends AbstractRoutingController
         $client = $this->container->getApiClient($supplier);
 
         $filter = new ZakenFilter();
-        $filter->add('identificatie', $identification);
+        $filter->add('identificatie', $this->decodeZaakIdentification($identification));
         $filter->byBsn(resolve('digid.current_user_bsn'));
 
         try {
             $zaak = $client->zaken()->filter($filter)->first() ?: null;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $zaak = null;
         }
 

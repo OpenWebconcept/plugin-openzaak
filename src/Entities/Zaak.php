@@ -7,9 +7,12 @@ namespace OWC\Zaaksysteem\Entities;
 use DateTimeImmutable;
 use OWC\Zaaksysteem\Support\Collection;
 use OWC\Zaaksysteem\Support\PagedCollection;
+use OWC\Zaaksysteem\Traits\ZaakIdentification;
 
 class Zaak extends Entity
 {
+    use ZaakIdentification;
+
     protected array $casts = [
         'url' => Casts\Url::class,
         // 'uuid'  => SomeClass::class,
@@ -20,7 +23,7 @@ class Zaak extends Entity
         'zaaktype' => Casts\Lazy\Zaaktype::class,
         'registratiedatum' => Casts\NullableDate::class,
         // 'verantwoordelijkeOrganisatie'  => SomeClass::class,
-        'startdatum'    => Casts\NullableDate::class,
+        'startdatum' => Casts\NullableDate::class,
         'einddatum' => Casts\NullableDate::class,
         'einddatumGepland' => Casts\NullableDate::class,
         'uiterlijkeEinddatumAfdoening' => Casts\NullableDate::class,
@@ -75,12 +78,13 @@ class Zaak extends Entity
     public function permalink(): string
     {
         $supplier = $this->getSupplier();
+        $identification = $this->getValue('identificatie', '');
 
         if (empty($supplier)) {
-            return sprintf('%s/zaak/%s', get_site_url(), $this->getValue('identificatie', ''));
+            return sprintf('%s/zaak/%s', get_site_url(), $this->encodeZaakIdentification($identification));
         }
 
-        return sprintf('%s/zaak/%s/%s', get_site_url(), $this->getValue('identificatie', ''), $supplier);
+        return sprintf('%s/zaak/%s/%s', get_site_url(), $this->encodeZaakIdentification($identification), $supplier);
     }
 
     protected function getSupplier(): string
