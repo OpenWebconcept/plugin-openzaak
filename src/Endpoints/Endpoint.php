@@ -52,7 +52,7 @@ abstract class Endpoint
     {
         return new RequestOptions([
             'headers' => [
-                'Authorization' => 'taken' === $this->apiType || $this->client->getClientNamePretty() === 'rx-mission' ? $this->authenticator->getApiKeyMijnTaken() : $this->authenticator->getAuthString(),
+                'Authorization' => 'taken' === $this->apiType ? $this->authenticator->getApiKeyMijnTaken() : $this->authenticator->getAuthString(),
             ],
         ]);
     }
