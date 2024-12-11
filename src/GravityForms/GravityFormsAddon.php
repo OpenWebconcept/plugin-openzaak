@@ -129,6 +129,33 @@ class GravityFormsAddon extends GFAddOn
                         ],
                     ],
                 ],
+                [
+                    'name' => "{$this->prefix}-suppliers",
+                    'label' => esc_html__('Leveranciers', 'owc-gravityforms-zaaksysteem'),
+                    'type' => 'checkbox',
+                    'choices' => [
+                        [
+                            'label' => 'Decos Join',
+                            'name' => "{$this->prefix}-suppliers-decos-join-enabled",
+                        ],
+                        [
+                            'label' => 'OpenZaak',
+                            'name' => "{$this->prefix}-suppliers-openzaak-enabled",
+                        ],
+                        [
+                            'label' => 'Procura',
+                            'name' => "{$this->prefix}-suppliers-procura-enabled",
+                        ],
+                        [
+                            'label' => 'Rx.Mission',
+                            'name' => "{$this->prefix}-suppliers-rx-mission-enabled",
+                        ],
+                        [
+                            'label' => 'Xxllnc',
+                            'name' => "{$this->prefix}-suppliers-xxllnc-enabled",
+                        ],
+                    ],
+                ],
             ],
         ];
     }
@@ -148,34 +175,48 @@ class GravityFormsAddon extends GFAddOn
     {
         return [
             'title' => esc_html__('OpenZaak', 'owc-gravityforms-zaaksysteem'),
+            'dependency' => [
+                'live' => true,
+                'fields' => [
+                    [
+                        'field' => "{$this->prefix}-suppliers",
+                        'values' => ["{$this->prefix}-suppliers-openzaak-enabled"],
+                    ],
+                ],
+            ],
             'fields' => [
                 [
                     'label' => esc_html__('Catalogi URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-openzaak-catalogi-url",
                 ],
                 [
                     'label' => esc_html__('Documenten URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-openzaak-documenten-url",
                 ],
                 [
                     'label' => esc_html__('Zaken URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-openzaak-zaken-url",
                 ],
                 [
                     'label' => esc_html__('Client ID', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-openzaak-client-id",
                 ],
                 [
                     'label' => esc_html__('Client Secret', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-openzaak-client-secret",
                 ],
@@ -187,40 +228,55 @@ class GravityFormsAddon extends GFAddOn
     {
         return [
             'title' => esc_html__('Decos Join', 'owc-gravityforms-zaaksysteem'),
+            'dependency' => [
+                'live' => true,
+                'fields' => [
+                    [
+                        'field' => "{$this->prefix}-suppliers",
+                        'values' => ["{$this->prefix}-suppliers-decos-join-enabled"],
+                    ],
+                ],
+            ],
             'fields' => [
                 [
                     'label' => esc_html__('Catalogi URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-decos-join-catalogi-url",
                 ],
                 [
                     'label' => esc_html__('Documenten URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-decos-join-documenten-url",
                 ],
                 [
                     'label' => esc_html__('Zaken URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-decos-join-zaken-url",
                 ],
                 [
                     'label' => esc_html__('Client ID', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-decos-join-client-id",
                 ],
                 [
                     'label' => esc_html__('Client Secret (ZTC)', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-decos-join-client-secret",
                 ],
                 [
                     'label' => esc_html__('Client Secret (ZRC)', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-decos-join-client-secret-zrc",
                 ],
@@ -232,34 +288,48 @@ class GravityFormsAddon extends GFAddOn
     {
         return [
             'title' => esc_html__('Rx.Mission', 'owc-gravityforms-zaaksysteem'),
+            'dependency' => [
+                'live' => true,
+                'fields' => [
+                    [
+                        'field' => "{$this->prefix}-suppliers",
+                        'values' => ["{$this->prefix}-suppliers-rx-mission-enabled"],
+                    ],
+                ],
+            ],
             'fields' => [
                 [
                     'label' => esc_html__('Catalogi URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-rx-mission-catalogi-url",
                 ],
                 [
                     'label' => esc_html__('Documenten URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-rx-mission-documenten-url",
                 ],
                 [
                     'label' => esc_html__('Zaken URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-rx-mission-zaken-url",
                 ],
                 [
                     'label' => esc_html__('Client ID', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-rx-mission-client-id",
                 ],
                 [
                     'label' => esc_html__('Client Secret', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-rx-mission-client-secret",
                 ],
@@ -271,34 +341,48 @@ class GravityFormsAddon extends GFAddOn
     {
         return [
             'title' => esc_html__('Xxllnc', 'owc-gravityforms-zaaksysteem'),
+            'dependency' => [
+                'live' => true,
+                'fields' => [
+                    [
+                        'field' => "{$this->prefix}-suppliers",
+                        'values' => ["{$this->prefix}-suppliers-xxllnc-enabled"],
+                    ],
+                ],
+            ],
             'fields' => [
                 [
                     'label' => esc_html__('Catalogi URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-xxllnc-catalogi-url",
                 ],
                 [
                     'label' => esc_html__('Documenten URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-xxllnc-documenten-url",
                 ],
                 [
                     'label' => esc_html__('Zaken URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-xxllnc-zaken-url",
                 ],
                 [
                     'label' => esc_html__('Client ID', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-xxllnc-client-id",
                 ],
                 [
                     'label' => esc_html__('Client Secret', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-xxllnc-client-secret",
                 ],
@@ -310,34 +394,48 @@ class GravityFormsAddon extends GFAddOn
     {
         return [
             'title' => esc_html__('Procura', 'owc-gravityforms-zaaksysteem'),
+            'dependency' => [
+                'live' => true,
+                'fields' => [
+                    [
+                        'field' => "{$this->prefix}-suppliers",
+                        'values' => ["{$this->prefix}-suppliers-procura-enabled"],
+                    ],
+                ],
+            ],
             'fields' => [
                 [
                     'label' => esc_html__('Catalogi URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-procura-catalogi-url",
                 ],
                 [
                     'label' => esc_html__('Documenten URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-procura-documenten-url",
                 ],
                 [
                     'label' => esc_html__('Zaken URL', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-procura-zaken-url",
                 ],
                 [
                     'label' => esc_html__('Client ID', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-procura-client-id",
                 ],
                 [
                     'label' => esc_html__('Client Secret', 'owc-gravityforms-zaaksysteem'),
                     'type' => 'text',
+                    'required' => true,
                     'class' => 'medium',
                     'name' => "{$this->prefix}-procura-client-secret",
                 ],

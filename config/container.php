@@ -16,6 +16,9 @@ return [
      * OpenZaak configuration.
      */
     'openzaak.abbr' => 'oz',
+    'oz.enabled' => function (Container $container) {
+        return (bool) $container->make('gf.setting', ['-suppliers-openzaak-enabled']);
+    },
     'oz.client' => fn (Container $container) => $container->get(Clients\OpenZaak\Client::class),
     'oz.catalogi_uri' => function (Container $container) {
         return $container->make('gf.setting', ['-openzaak-catalogi-url']);
@@ -40,6 +43,9 @@ return [
      * Decos JOIN configuration.
      */
     'decosjoin.abbr' => 'dj',
+    'dj.enabled' => function (Container $container) {
+        return (bool) $container->make('gf.setting', ['-suppliers-decos-join-enabled']);
+    },
     'dj.client' => fn (Container $container) => $container->get(Clients\DecosJoin\Client::class),
     'dj.catalogi_uri' => function (Container $container) {
         return $container->make('gf.setting', ['-decos-join-catalogi-url']);
@@ -70,6 +76,9 @@ return [
      * RX.Mission configuration.
      */
     'rx-mission.abbr' => 'rx',
+    'rx.enabled' => function (Container $container) {
+        return (bool) $container->make('gf.setting', ['-suppliers-rx-mission-enabled']);
+    },
     'rx.client' => fn (Container $container) => $container->get(Clients\RxMission\Client::class),
     'rx.catalogi_uri' => function (Container $container) {
         return $container->make('gf.setting', ['-rx-mission-catalogi-url']);
@@ -94,6 +103,9 @@ return [
      * Xxllnc configuration.
      */
     'xxllnc.abbr' => 'xxllnc',
+    'xxllnc.enabled' => function (Container $container) {
+        return (bool) $container->make('gf.setting', ['-suppliers-xxllnc-enabled']);
+    },
     'xxllnc.client' => fn (Container $container) => $container->get(Clients\Xxllnc\Client::class),
     'xxllnc.catalogi_uri' => function (Container $container) {
         return $container->make('gf.setting', ['-xxllnc-catalogi-url']);
@@ -118,6 +130,9 @@ return [
      * Procura configuration.
      */
     'procura.abbr' => 'procura',
+    'procura.enabled' => function (Container $container) {
+        return (bool) $container->make('gf.setting', ['-suppliers-procura-enabled']);
+    },
     'procura.client' => fn (Container $container) => $container->get(Clients\Procura\Client::class),
     'procura.catalogi_uri' => function (Container $container) {
         return $container->make('gf.setting', ['-procura-catalogi-url']);
