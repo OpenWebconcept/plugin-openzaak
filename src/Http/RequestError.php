@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace OWC\Zaaksysteem\Http;
 
 use Exception;
+use Throwable;
 
 class RequestError extends Exception
 {
@@ -14,9 +15,9 @@ class RequestError extends Exception
     {
         try {
             $json = $response->getParsedJson();
-            $message = sprintf('%s "%s".', $json['title'] ?? '', $json['detail'] ?? '');
+            $message = (new static())->formatResponse($json);
             $status = $json['status'] ?? 0;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $message = 'A request error occurred. Additionally, no error message could be retrieved.';
             $status = 0;
         }
@@ -37,5 +38,18 @@ class RequestError extends Exception
     public function getResponse(): ?Response
     {
         return $this->response;
+    }
+
+    protected function formatResponse(array $json): string
+    {
+        if (isset($json['title']) && isset($json['detail'])) {
+            return sprintf('%s "%s".', $json['title'], $json['detail']);
+        }
+
+        if (isset($json['message']) && isset($json['exception'])) {
+            return sprintf('%s "%s".', $json['message'], $json['exception']);
+        }
+
+        return 'A request error occurred. Additionally, no error message could be retrieved.';
     }
 }
