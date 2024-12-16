@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace OWC\Zaaksysteem\Endpoints;
 
 use OWC\Zaaksysteem\Entities\Entity;
-use OWC\Zaaksysteem\Entities\Status;
+use OWC\Zaaksysteem\Entities\StatusType;
 use OWC\Zaaksysteem\Entities\Zaak;
 use OWC\Zaaksysteem\Http\Response;
 use OWC\Zaaksysteem\Resolvers\ContainerResolver;
@@ -52,7 +52,7 @@ class ZakenEndpoint extends Endpoint
         $class = $this->entityClass;
         $zaak = new $class($data, $this->client::CALLABLE_NAME, $this->client::CLIENT_NAME);
 
-        $statusToelichting = $zaak->status instanceof Status && isset($zaak->status->statustype) ? $zaak->status->statustype->statusExplanation() : '';
+        $statusToelichting = gettype($zaak->status) === 'object' && $zaak->status->statustype instanceof StatusType ? $zaak->status->statustype->statusExplanation() : '';
         $zaak->setValue('leverancier', $zaak->getClientNamePretty());
         $zaak->setValue('steps', $this->handleProcessStatusses($this->getStatussenSorted($zaak), $statusToelichting));
         $zaak->setValue('status_history', $zaak->statussen);
